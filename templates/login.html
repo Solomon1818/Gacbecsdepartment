@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block auth_content %}
+<div class="login-page">
+  <div class="login-left">
+    <div class="login-brand">
+      <div class="brand-badge">CS</div>
+      <h1>Computer Science<br>Department</h1>
+      <p>Student Management Portal — Staff Access</p>
+    </div>
+    <div class="login-decoration">
+      <div class="deco-circle c1"></div>
+      <div class="deco-circle c2"></div>
+      <div class="deco-circle c3"></div>
+    </div>
+  </div>
+  <div class="login-right">
+    <div class="login-card">
+      <h2>Sign in</h2>
+      <p class="login-subtitle">Enter your credentials to access the portal</p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endwith %}
+
+      <form method="POST" action="{{ url_for('auth.login') }}">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter username" required autocomplete="username"/>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter password" required autocomplete="current-password"/>
+        </div>
+        <button type="submit" class="btn-primary full-width">Sign In</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

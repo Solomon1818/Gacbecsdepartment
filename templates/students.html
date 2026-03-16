@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Students{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Students</h1>
+    <p class="page-subtitle">{{ students|length }} student(s) found</p>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="filter-bar">
+  <form method="GET" action="{{ url_for('students.students') }}" class="filter-form">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" name="search" value="{{ search }}" placeholder="Search by name or roll number..." class="search-input"/>
+    </div>
+    <div class="year-filters">
+      <a href="{{ url_for('students.students', search=search) }}"
+         class="year-btn {{ 'active' if not selected_year }}">All ({{ year_counts.values()|sum }})</a>
+      <a href="{{ url_for('students.students', year='First Year', search=search) }}"
+         class="year-btn {{ 'active' if selected_year == 'First Year' }}">I Year ({{ year_counts['First Year'] }})</a>
+      <a href="{{ url_for('students.students', year='Second Year', search=search) }}"
+         class="year-btn {{ 'active' if selected_year == 'Second Year' }}">II Year ({{ year_counts['Second Year'] }})</a>
+      <a href="{{ url_for('students.students', year='Third Year', search=search) }}"
+         class="year-btn {{ 'active' if selected_year == 'Third Year' }}">III Year ({{ year_counts['Third Year'] }})</a>
+    </div>
+    <button type="submit" class="btn-primary">Search</button>
+  </form>
+</div>
+
+<!-- Table -->
+<div class="table-wrap">
+  {% if students %}
+  <table class="students-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Roll No</th>
+        <th>Name</th>
+        <th>Year</th>
+        <th>Course</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in students %}
+      <tr>
+        <td class="td-num">{{ loop.index }}</td>
+        <td class="td-roll"><span class="roll-badge">{{ s.rollno }}</span></td>
+        <td class="td-name">{{ s.name }}</td>
+        <td>
+          <span class="year-pill year-{{ s.year | replace(' ', '-') | lower }}">{{ s.year }}</span>
+        </td>
+        <td class="td-course">{{ s.course }}</td>
+        <td class="td-phone">{{ s.phone or '—' }}</td>
+        <td class="td-email">{{ s.email or '—' }}</td>
+        <td>
+          <a href="{{ url_for('students.student_detail', student_id=s._id) }}" class="view-btn">View</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    <p>No students found matching your criteria.</p>
+    <a href="{{ url_for('students.students') }}" class="btn-secondary">Clear filters</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

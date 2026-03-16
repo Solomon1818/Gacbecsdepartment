@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}Arrears{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Arrear Tracker</h1>
+    <p class="page-subtitle">Track and manage student arrears — B.Sc Computer Science</p>
+  </div>
+</div>
+
+<!-- Summary strip -->
+{% set total_arrear_students = arrears_data.values() | map('length') | sum %}
+<div class="arrear-summary">
+  {% for year, students in arrears_data.items() %}
+  {% set pending_total = students | map(attribute='pending') | sum %}
+  <div class="arrear-summary-card">
+    <span class="year-pill year-{{ year | replace(' ','-') | lower }}">{{ year }}</span>
+    <div class="arrear-sum-nums">
+      <div class="arrear-sum-item">
+        <span class="arrear-sum-val">{{ students|length }}</span>
+        <span class="arrear-sum-label">Students with arrears</span>
+      </div>
+      <div class="arrear-sum-item">
+        <span class="arrear-sum-val red">{{ pending_total }}</span>
+        <span class="arrear-sum-label">Pending arrears</span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Year tabs -->
+<div class="year-tab-bar">
+  {% for year in arrears_data.keys() %}
+  <button class="year-tab-btn {{ 'active' if loop.first }}" data-year="{{ year | replace(' ','-') | lower }}">
+    {{ year }}
+    <span class="year-tab-count">{{ arrears_data[year]|length }}</span>
+  </button>
+  {% endfor %}
+</div>
+
+<!-- Arrear panels per year -->
+{% for year, students in arrears_data.items() %}
+<div class="arrear-panel {{ 'active' if loop.first }}" id="panel-{{ year | replace(' ','-') | lower }}">
+  {% if students %}
+  {% for s in students %}
+  <div class="arrear-student-card">
+    <div class="arrear-student-header">
+      <div class="arrear-student-info">
+        <div class="arrear-avatar">{{ s.name[0] }}</div>
+        <div>
+          <div class="arrear-name">{{ s.name }}</div>
+          <span class="roll-badge">{{ s.rollno }}</span>
+        </div>
+      </div>
+      <div class="arrear-counts">
+        <div class="arrear-count-item">
+          <span class="ac-val total-val">{{ s.total }}</span>
+          <span class="ac-label">Total</span>
+        </div>
+        <div class="arrear-count-item">
+          <span class="ac-val pend-val">{{ s.pending }}</span>
+          <span class="ac-label">Pending</span>
+        </div>
+        <div class="arrear-count-item">
+          <span class="ac-val clear-val">{{ s.cleared }}</span>
+          <span class="ac-label">Cleared</span>
+        </div>
+        <a href="{{ url_for('students.student_detail', student_id=s._id) }}" class="view-btn">View</a>
+      </div>
+    </div>
+
+    <div class="arrear-subjects">
+      {% for a in s.arrears %}
+      <div class="arrear-subject-row {{ 'arrear-cleared-row' if a.cleared }}" id="arr-{{ s._id }}-{{ loop.index }}">
+        <div class="arrear-subj-info">
+          <span class="arrear-sem-tag">{{ a.semester }}</span>
+          <span class="arrear-subj-name">{{ a.subject }}</span>
+          <span class="arrear-mark">{{ a.mark }}/100</span>
+        </div>
+        <div class="arrear-actions">
+          {% if a.cleared %}
+            <span class="arrear-status-cleared">✓ Cleared</span>
+            <button class="arrear-undo-btn"
+              onclick="toggleArrear('{{ s._id }}','{{ a.sem_key }}','{{ a.subject | replace("'","\\'")|replace('"','\\"') }}', false, this)">
+              Undo
+            </button>
+          {% else %}
+            <span class="arrear-status-pending">Pending</span>
+            <button class="arrear-clear-btn"
+              onclick="toggleArrear('{{ s._id }}','{{ a.sem_key }}','{{ a.subject | replace("'","\\'")|replace('"','\\"') }}', true, this)">
+              Mark Cleared
+            </button>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <p>No arrears found for {{ year }}. All students are clear! 🎉</p>
+  </div>
+  {% endif %}
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Year tab switching
+document.querySelectorAll('.year-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.year-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.arrear-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.year).classList.add('active');
+  });
+});
+
+async function toggleArrear(studentId, semKey, subject, cleared, btn) {
+  const res = await fetch(`/students/${studentId}/arrear`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ sem_key: semKey, subject: subject, cleared: cleared })
+  });
+  if (res.ok) {
+    // Update UI without full reload
+    const row = btn.closest('.arrear-subject-row');
+    const actionsDiv = row.querySelector('.arrear-actions');
+    if (cleared) {
+      row.classList.add('arrear-cleared-row');
+      actionsDiv.innerHTML = `
+        <span class="arrear-status-cleared">✓ Cleared</span>
+        <button class="arrear-undo-btn" onclick="toggleArrear('${studentId}','${semKey}','${subject.replace(/'/g,"\\'")}',false,this)">Undo</button>`;
+    } else {
+      row.classList.remove('arrear-cleared-row');
+      actionsDiv.innerHTML = `
+        <span class="arrear-status-pending">Pending</span>
+        <button class="arrear-clear-btn" onclick="toggleArrear('${studentId}','${semKey}','${subject.replace(/'/g,"\\'")}',true,this)">Mark Cleared</button>`;
+    }
+    // Update counts in header
+    const card = btn.closest('.arrear-student-card');
+    const allRows = card.querySelectorAll('.arrear-subject-row');
+    const clearedCount = [...allRows].filter(r => r.classList.contains('arrear-cleared-row')).length;
+    const pendingCount = allRows.length - clearedCount;
+    card.querySelector('.pend-val').textContent = pendingCount;
+    card.querySelector('.clear-val').textContent = clearedCount;
+  }
+}
+</script>
+{% endblock %}
