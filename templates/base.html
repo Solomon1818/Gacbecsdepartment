@@ -50,6 +50,10 @@
       </a>
     </div>
   </nav>
+  <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
   <main class="main-content">
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% for category, message in messages %}
@@ -62,6 +66,20 @@
     {% block auth_content %}{% endblock %}
   {% endif %}
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <script>
+  function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('active');
+    document.body.style.overflow = document.querySelector('.sidebar').classList.contains('open') ? 'hidden' : '';
+  }
+  // Close sidebar when nav link clicked on mobile
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      if (window.innerWidth <= 768) toggleSidebar();
+    });
+  });
+  </script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

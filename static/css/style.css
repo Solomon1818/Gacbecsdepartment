@@ -514,3 +514,147 @@ a.stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); transform: translate
 .arrear-clear-btn:hover { background:#059669; color:#fff; }
 .arrear-undo-btn  { padding:5px 14px; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--text2); font-family:var(--font); font-size:12.5px; font-weight:500; cursor:pointer; transition:all .15s; }
 .arrear-undo-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — Mobile, Tablet, Laptop
+   ══════════════════════════════════════════ */
+
+/* ── Hamburger button (hidden on desktop) ── */
+.hamburger {
+  display: none; position: fixed; top: 14px; left: 14px; z-index: 200;
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--sidebar); border: none; cursor: pointer;
+  align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+}
+.hamburger span {
+  display: block; width: 20px; height: 2px;
+  background: #fff; border-radius: 2px; transition: all .25s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Overlay behind sidebar on mobile */
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  z-index: 99; opacity: 0; transition: opacity .25s;
+}
+.sidebar-overlay.active { opacity: 1; }
+
+/* ── Laptop (≤1280px) ────────────────────── */
+@media (max-width: 1280px) {
+  .stats-grid-5 { grid-template-columns: repeat(3, 1fr); }
+  .detail-layout { grid-template-columns: 280px 1fr; }
+}
+
+/* ── Tablet (≤1024px) ────────────────────── */
+@media (max-width: 1024px) {
+  :root { --sidebar-w: 220px; }
+  .stats-grid   { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid-5 { grid-template-columns: repeat(2, 1fr); }
+  .detail-layout { grid-template-columns: 1fr; }
+  .att-grid     { grid-template-columns: repeat(2, 1fr); }
+  .att-edit-grid { grid-template-columns: repeat(2, 1fr); }
+  .quick-links  { flex-wrap: wrap; }
+  .quick-card   { flex: 1 1 calc(50% - 6px); min-width: 140px; }
+  .rank-cgpa-bar-wrap { width: 60px; }
+  .arrear-summary { flex-wrap: wrap; }
+  .arrear-summary-card { flex: 1 1 calc(33% - 12px); min-width: 160px; }
+}
+
+/* ── Mobile (≤768px) ─────────────────────── */
+@media (max-width: 768px) {
+  /* Show hamburger, hide sidebar by default */
+  .hamburger { display: flex; }
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    z-index: 100;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay { display: block; }
+
+  /* Main content — full width, add top padding for hamburger */
+  .main-content {
+    margin-left: 0;
+    padding: 64px 16px 24px;
+  }
+
+  /* Stats — single column */
+  .stats-grid, .stats-grid-5 { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* Page header */
+  .page-title { font-size: 18px; }
+
+  /* Filter bar — stack vertically */
+  .filter-form { flex-direction: column; align-items: stretch; }
+  .year-filters { flex-wrap: wrap; }
+  .year-btn { font-size: 12px; padding: 6px 10px; }
+
+  /* Tables — horizontal scroll */
+  .table-wrap, .rank-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .students-table, .rank-table, .marks-table { min-width: 600px; }
+
+  /* Detail layout — single column */
+  .detail-layout { grid-template-columns: 1fr; gap: 14px; }
+
+  /* Attendance grid */
+  .att-grid { grid-template-columns: repeat(2, 1fr); }
+  .att-edit-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* GPA strip — wrap */
+  .gpa-strip { flex-wrap: wrap; }
+  .gpa-chip { min-width: 70px; }
+
+  /* Quick links — 2 per row */
+  .quick-links { flex-wrap: wrap; }
+  .quick-card { flex: 1 1 calc(50% - 6px); }
+
+  /* Rank section */
+  .rank-cgpa-bar-wrap { width: 50px; }
+  .rank-num-badge { width: 22px; height: 22px; font-size: 11px; }
+
+  /* Arrear summary */
+  .arrear-summary { flex-direction: column; }
+  .arrear-summary-card { width: 100%; }
+  .arrear-student-header { flex-direction: column; align-items: flex-start; }
+  .arrear-counts { flex-wrap: wrap; gap: 12px; }
+
+  /* Sem tabs — wrap */
+  .sem-tabs { flex-wrap: wrap; }
+  .sem-tab { font-size: 12px; padding: 5px 12px; }
+
+  /* GPA footer — stack */
+  .sem-gpa-footer { flex-direction: column; gap: 12px; }
+
+  /* Login page */
+  .login-left { display: none; }
+  .login-right { width: 100%; padding: 24px 20px; }
+  .login-card h2 { font-size: 20px; }
+
+  /* Rankings */
+  .rank-section-header { flex-wrap: wrap; }
+
+  /* Year tab bar */
+  .year-tab-bar { flex-wrap: wrap; gap: 4px; }
+  .year-tab-btn { font-size: 12.5px; padding: 7px 12px; }
+
+  /* Info rows */
+  .info-label { min-width: 110px; font-size: 12px; }
+  .info-value { font-size: 12.5px; }
+
+  /* Profile card */
+  .cgpa-hero { padding: 12px 14px; }
+  .cgpa-value { font-size: 28px; }
+}
+
+/* ── Small mobile (≤480px) ───────────────── */
+@media (max-width: 480px) {
+  .stats-grid, .stats-grid-5 { grid-template-columns: 1fr; }
+  .stat-number { font-size: 26px; }
+  .att-grid { grid-template-columns: repeat(2, 1fr); }
+  .att-edit-grid { grid-template-columns: 1fr; }
+  .quick-card { flex: 1 1 100%; }
+  .main-content { padding: 60px 12px 20px; }
+  .gpa-chip { min-width: 60px; max-width: 80px; }
+}
