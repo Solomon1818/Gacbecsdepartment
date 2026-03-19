@@ -50,10 +50,10 @@
       </a>
     </div>
   </nav>
-  <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+  <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
-  <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+  <div class="sidebar-overlay" id="overlay"></div>
   <main class="main-content">
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% for category, message in messages %}
@@ -67,18 +67,48 @@
   {% endif %}
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
   <script>
-  function toggleSidebar() {
-    document.querySelector('.sidebar').classList.toggle('open');
-    document.getElementById('hamburger').classList.toggle('open');
-    document.getElementById('overlay').classList.toggle('active');
-    document.body.style.overflow = document.querySelector('.sidebar').classList.contains('open') ? 'hidden' : '';
-  }
-  // Close sidebar when nav link clicked on mobile
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => {
-      if (window.innerWidth <= 768) toggleSidebar();
+  (function() {
+    var sidebar  = document.querySelector('.sidebar');
+    var hamburger = document.getElementById('hamburger');
+    var overlay  = document.getElementById('overlay');
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      hamburger.classList.add('open');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      hamburger.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function toggleSidebar() {
+      if (sidebar.classList.contains('open')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    }
+
+    hamburger.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', closeSidebar);
+
+    // Close sidebar when a nav link is clicked on mobile
+    document.querySelectorAll('.nav-links a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        if (window.innerWidth <= 768) closeSidebar();
+      });
     });
-  });
+
+    // Close sidebar if window is resized to desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) closeSidebar();
+    });
+  })();
   </script>
   {% block scripts %}{% endblock %}
 </body>
