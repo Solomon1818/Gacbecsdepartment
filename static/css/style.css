@@ -1,201 +1,113 @@
-/* ===== GLOBAL SYSTEM ===== */
-:root {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --sidebar: #0f172a;
-  --accent: #2563eb;
-  --accent2: #1e40af;
-  --text: #0f172a;
-  --text2: #64748b;
-  --border: #e2e8f0;
-  --radius: 14px;
-  --shadow: 0 10px 25px rgba(0,0,0,0.06);
-}
-
-/* RESET */
 * { margin:0; padding:0; box-sizing:border-box; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
 }
 
-/* ===== SIDEBAR ===== */
+.layout {
+  display: flex;
+}
+
+/* SIDEBAR */
 .sidebar {
   width: 240px;
-  position: fixed;
-  height: 100%;
-  background: var(--sidebar);
+  height: 100vh;
+  background: #0f172a;
+  color: white;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
+  position: fixed;
 }
 
-.sidebar-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.sidebar h2 {
   margin-bottom: 30px;
 }
 
-.logo-icon {
-  width: 36px;
-  height: 36px;
-  background: var(--accent);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.logo-text span {
+.sidebar nav a {
   display: block;
-  color: white;
-}
-
-.nav-links {
-  list-style: none;
-}
-
-.nav-links a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
   padding: 10px;
+  margin-bottom: 8px;
   border-radius: 8px;
   color: #cbd5f5;
   transition: 0.2s;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-  background: var(--accent);
+.sidebar nav a:hover {
+  background: #2563eb;
   color: white;
 }
 
-.nav-links svg {
-  width: 18px;
-  height: 18px;
-}
-
-/* ===== MAIN ===== */
-.main-content {
+/* MAIN */
+.main {
   margin-left: 240px;
   padding: 40px;
+  width: 100%;
 }
 
-/* ===== HEADER ===== */
-.page-title {
+/* TITLE */
+.title {
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
-.page-subtitle {
-  color: var(--text2);
-  margin-top: 5px;
-}
-
-/* ===== CARDS ===== */
-.stat-card,
-.quick-card,
-.table-wrap,
-.arrear-student-card,
-.rank-table-wrap {
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-.stat-card {
-  padding: 20px;
-  transition: 0.25s;
-}
-
-.stat-card:hover {
-  transform: translateY(-4px);
-}
-
-.stat-number {
-  font-size: 30px;
-  font-weight: 700;
-  color: var(--accent);
-}
-
-/* ===== GRID ===== */
-.stats-grid {
+/* GRID */
+.grid {
   display: grid;
   grid-template-columns: repeat(5,1fr);
   gap: 16px;
 }
 
-/* ===== TABLE ===== */
-.students-table,
-.rank-table {
+/* CARD */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+/* TABLE */
+.table {
+  margin-top: 20px;
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.table table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.students-table th,
-.rank-table th {
-  background: #f1f5f9;
-  padding: 12px;
-  font-size: 12px;
-  color: var(--text2);
-}
-
-.students-table td,
-.rank-table td {
+.table th, .table td {
   padding: 14px;
-  border-bottom: 1px solid var(--border);
 }
 
-.students-table tr:hover,
-.rank-table tr:hover {
+.table th {
+  background: #f1f5f9;
+  font-size: 12px;
+}
+
+.table tr:hover {
   background: #f9fafb;
 }
 
-/* ===== BUTTONS ===== */
-.btn,
-.view-btn {
-  padding: 6px 14px;
+/* BUTTON */
+.btn {
+  padding: 6px 12px;
   border-radius: 8px;
-  background: var(--accent);
+  background: #2563eb;
   color: white;
-  border: none;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.btn:hover,
-.view-btn:hover {
-  background: var(--accent2);
-}
-
-/* ===== ARREARS ===== */
-.arrear-summary {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
-.arrear-summary-card {
-  padding: 16px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
-.arrear-student-card {
-  padding: 16px;
-  margin-bottom: 16px;
-}
-
-/* ===== EMPTY ===== */
-.empty-state {
-  text-align: center;
-  padding: 40px;
-  color: var(--text2);
+  text-decoration: none;
 }

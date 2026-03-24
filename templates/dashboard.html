@@ -1,45 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Dashboard</h1>
 
-<div class="stats-grid">
+<div class="title">Dashboard</div>
 
-  <div class="stat-card">
+<div class="grid">
+
+  <div class="card">
     <div>Total Students</div>
-    <div class="stat-number">{{ stats.total }}</div>
+    <div class="value">{{ stats.total }}</div>
   </div>
 
-  <div class="stat-card">
+  <div class="card">
     <div>First Year</div>
-    <div class="stat-number">{{ stats.first_year }}</div>
+    <div class="value">{{ stats.first_year }}</div>
   </div>
 
-  <div class="stat-card">
+  <div class="card">
     <div>Second Year</div>
-    <div class="stat-number">{{ stats.second_year }}</div>
+    <div class="value">{{ stats.second_year }}</div>
   </div>
 
-  <div class="stat-card">
+  <div class="card">
     <div>Third Year</div>
-    <div class="stat-number">{{ stats.third_year }}</div>
+    <div class="value">{{ stats.third_year }}</div>
   </div>
 
-  <div class="stat-card">
+  <div class="card">
     <div>Arrears</div>
-    <div class="stat-number">{{ stats.arrear_students }}</div>
+    <div class="value">{{ stats.arrear_students }}</div>
   </div>
 
-</div>
-
-<br><br>
-
-<div class="card">
-  <h3>Quick Access</h3>
-  <br>
-  <a class="btn" href="/students">Students</a>
-  <a class="btn" href="/rankings">Rankings</a>
-  <a class="btn" href="/arrears">Arrears</a>
 </div>
 
 {% endblock %}
