@@ -14,15 +14,14 @@
 <div class="layout">
 
   <aside class="sidebar">
-    <h2>CS Portal</h2>
-
-    <nav>
-      <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
-      <a href="{{ url_for('students.students') }}">Students</a>
-      <a href="{{ url_for('main.rankings') }}">Rankings</a>
-      <a href="{{ url_for('main.arrears') }}">Arrears</a>
-    </nav>
-  </aside>
+  <h2>🎓 CS Portal</h2>
+  <nav>
+    <a href="#">🏠 Dashboard</a>
+    <a href="#">👨‍🎓 Students</a>
+    <a href="#">📊 Rankings</a>
+    <a href="#">⚠️ Arrears</a>
+  </nav>
+</aside>
 
   <main class="main">
     {% block content %}{% endblock %}
