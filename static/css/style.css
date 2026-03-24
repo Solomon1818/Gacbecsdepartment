@@ -1,3 +1,66 @@
+/* ===== UI UPGRADE PATCH ===== */
+
+/* Better background */
+body {
+  background: #f8fafc;
+}
+
+/* Cards depth */
+.stat-card, .quick-card, .table-wrap, .filter-bar {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  border-radius: 14px;
+}
+
+/* Hover lift */
+.stat-card:hover,
+.quick-card:hover {
+  transform: translateY(-4px);
+  transition: all 0.25s ease;
+}
+
+/* Sidebar fix */
+.sidebar svg {
+  width: 18px;
+  height: 18px;
+}
+
+.sidebar a {
+  align-items: center;
+}
+
+/* Fix giant icons issue */
+.nav-links svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* Improve spacing */
+.page-header {
+  margin-bottom: 20px;
+}
+
+/* Improve numbers */
+.stat-number {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/* Quick access better */
+.quick-card {
+  padding: 14px 18px;
+  border-radius: 12px;
+}
+
+/* Table polish */
+.students-table tbody tr:hover {
+  background: #f1f5f9;
+}
+
+/* Buttons better */
+.btn-primary, .view-btn {
+  border-radius: 10px;
+  padding: 8px 16px;
+}
 :root {
   --bg: #f6f8fb;
   --surface: #ffffff;
@@ -121,4 +184,20 @@ tr:hover {
 
 .btn:hover {
   background: var(--accent2);
+}
+.sidebar {
+  overflow: hidden;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* FIX icon scaling */
+.nav-links svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
 }
