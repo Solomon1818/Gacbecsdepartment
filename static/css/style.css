@@ -201,3 +201,31 @@ tr:hover {
   width: 18px;
   height: 18px;
 }
+.nav-links svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.stat-card,
+.quick-card,
+.table-wrap,
+.filter-bar {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  border-radius: 14px;
+}
+.main-content {
+  padding: 40px;
+}
+
+.page-header {
+  margin-bottom: 20px;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  transition: all 0.25s ease;
+}
