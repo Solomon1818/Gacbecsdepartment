@@ -1,68 +1,5 @@
-/* ===== UI UPGRADE PATCH ===== */
-
-/* Better background */
-body {
-  background: #f8fafc;
-}
-
-/* Cards depth */
-.stat-card, .quick-card, .table-wrap, .filter-bar {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-  border-radius: 14px;
-}
-
-/* Hover lift */
-.stat-card:hover,
-.quick-card:hover {
-  transform: translateY(-4px);
-  transition: all 0.25s ease;
-}
-
-/* Sidebar fix */
-.sidebar svg {
-  width: 18px;
-  height: 18px;
-}
-
-.sidebar a {
-  align-items: center;
-}
-
-/* Fix giant icons issue */
-.nav-links svg {
-  width: 18px !important;
-  height: 18px !important;
-}
-
-/* Improve spacing */
-.page-header {
-  margin-bottom: 20px;
-}
-
-/* Improve numbers */
-.stat-number {
-  font-size: 30px;
-  font-weight: 700;
-}
-
-/* Quick access better */
-.quick-card {
-  padding: 14px 18px;
-  border-radius: 12px;
-}
-
-/* Table polish */
-.students-table tbody tr:hover {
-  background: #f1f5f9;
-}
-
-/* Buttons better */
-.btn-primary, .view-btn {
-  border-radius: 10px;
-  padding: 8px 16px;
-}
 :root {
-  --bg: #f6f8fb;
+  --bg: #f8fafc;
   --surface: #ffffff;
   --sidebar: #0b1324;
   --accent: #2563eb;
@@ -72,78 +9,84 @@ body {
   --border: #e2e8f0;
   --radius: 14px;
   --shadow: 0 10px 25px rgba(0,0,0,0.05);
-  --font: 'DM Sans', sans-serif;
 }
 
 /* RESET */
 * { margin:0; padding:0; box-sizing:border-box; }
+
 body {
-  font-family: var(--font);
+  font-family: 'DM Sans', sans-serif;
   background: var(--bg);
   color: var(--text);
 }
 
 /* SIDEBAR */
 .sidebar {
-  width: 250px;
+  width: 240px;
   background: var(--sidebar);
   position: fixed;
   height: 100%;
   padding: 20px;
 }
 
-.sidebar a {
+.nav-links a {
   display: flex;
-  padding: 12px;
-  border-radius: 8px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
   color: #cbd5f5;
-  margin-bottom: 6px;
-  transition: 0.25s;
+  border-radius: 8px;
+  transition: 0.2s;
 }
 
-.sidebar a:hover,
-.sidebar a.active {
+.nav-links a:hover,
+.nav-links a.active {
   background: var(--accent);
   color: white;
 }
 
+.nav-links svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 /* MAIN */
 .main-content {
-  margin-left: 250px;
-  padding: 30px;
+  margin-left: 240px;
+  padding: 40px;
+}
+
+/* HEADER */
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
 }
 
 /* CARDS */
-.card {
-  background: var(--surface);
+.stat-card {
+  background: white;
   padding: 20px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  transition: 0.3s;
+  transition: 0.25s;
 }
 
-.card:hover {
+.stat-card:hover {
   transform: translateY(-4px);
 }
 
-/* DASHBOARD GRID */
+.stat-number {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* GRID */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(5,1fr);
   gap: 16px;
-}
-
-.stat-card {
-  background: linear-gradient(135deg, #ffffff, #f1f5f9);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
-}
-
-.stat-number {
-  font-size: 28px;
-  font-weight: bold;
-  color: var(--accent);
 }
 
 /* TABLE */
@@ -152,80 +95,24 @@ table {
   border-collapse: collapse;
   background: white;
   border-radius: var(--radius);
-  overflow: hidden;
   box-shadow: var(--shadow);
 }
 
 th, td {
   padding: 14px;
-  text-align: left;
 }
 
 th {
   background: #f1f5f9;
   font-size: 12px;
-  text-transform: uppercase;
   color: var(--text2);
 }
 
-tr:hover {
-  background: #f9fafb;
-}
-
 /* BUTTON */
-.btn {
+.btn, .view-btn {
   padding: 8px 14px;
   border-radius: 8px;
   background: var(--accent);
   color: white;
   border: none;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background: var(--accent2);
-}
-.sidebar {
-  overflow: hidden;
-}
-
-.nav-links a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* FIX icon scaling */
-.nav-links svg {
-  flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-}
-.nav-links svg {
-  width: 18px !important;
-  height: 18px !important;
-}
-
-.nav-links a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.stat-card,
-.quick-card,
-.table-wrap,
-.filter-bar {
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  border-radius: 14px;
-}
-.main-content {
-  padding: 40px;
-}
-
-.page-header {
-  margin-bottom: 20px;
-}
-.stat-card:hover {
-  transform: translateY(-4px);
-  transition: all 0.25s ease;
 }
