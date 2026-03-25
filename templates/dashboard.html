@@ -1,21 +1,67 @@
 {% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
-
-<div class="title">Dashboard</div>
-
-<div class="grid">
-
-  <div class="card">
-  <div>Total Students</div>
-  <div class="value" style="color:#2563eb;">{{ stats.total }}</div>
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">Welcome back, {{ user.name }}</p>
+  </div>
 </div>
 
-<div class="card">
-  <div>Arrears</div>
-  <div class="value" style="color:#dc2626;">{{ stats.arrear_students }}</div>
+<div class="stats-grid">
+  <div class="stat-card stat-total">
+    <div class="stat-label">Total Students</div>
+    <div class="stat-number">{{ stats.total }}</div>
+    <div class="stat-desc">Across all years</div>
+  </div>
+  <a href="{{ url_for('students.students', year='First Year') }}" class="stat-card stat-y1">
+    <div class="stat-label">First Year</div>
+    <div class="stat-number">{{ stats.first_year }}</div>
+    <div class="stat-desc">2023–24 batch</div>
+  </a>
+  <a href="{{ url_for('students.students', year='Second Year') }}" class="stat-card stat-y2">
+    <div class="stat-label">Second Year</div>
+    <div class="stat-number">{{ stats.second_year }}</div>
+    <div class="stat-desc">2022–23 batch</div>
+  </a>
+  <a href="{{ url_for('students.students', year='Third Year') }}" class="stat-card stat-y3">
+    <div class="stat-label">Third Year</div>
+    <div class="stat-number">{{ stats.third_year }}</div>
+    <div class="stat-desc">2021–22 batch</div>
+  </a>
 </div>
 
+<div class="stats-grid" style="grid-template-columns: repeat(2,1fr); margin-top: 0;">
+  <a href="{{ url_for('main.rankings') }}" class="stat-card">
+    <div class="stat-label">Top Rankings</div>
+    <div class="stat-number" style="color:var(--accent)">Top 10</div>
+    <div class="stat-desc">View per year</div>
+  </a>
+  <a href="{{ url_for('main.arrears') }}" class="stat-card">
+    <div class="stat-label">Students with Arrears</div>
+    <div class="stat-number" style="color:#dc2626">{{ arrear_count }}</div>
+    <div class="stat-desc">Click to track</div>
+  </a>
 </div>
 
+<div class="section-header mt24"><h2>Quick Access</h2></div>
+<div class="quick-links">
+  <a href="{{ url_for('students.students') }}" class="quick-card">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    <span>All Students</span>
+  </a>
+  <a href="{{ url_for('students.students', year='First Year') }}" class="quick-card">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>First Year</span>
+  </a>
+  <a href="{{ url_for('students.students', year='Second Year') }}" class="quick-card">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>Second Year</span>
+  </a>
+  <a href="{{ url_for('students.students', year='Third Year') }}" class="quick-card">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>Third Year</span>
+  </a>
+</div>
 {% endblock %}
